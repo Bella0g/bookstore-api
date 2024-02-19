@@ -1,3 +1,4 @@
+namespace ProductModel;
 
 public class Product
 {

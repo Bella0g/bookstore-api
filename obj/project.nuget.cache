@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "oIx8209yJoHItnzdeXoCL1Ui2CchxC7r7m8xR6UnKQ432emGT3DCLbqihL7WrV3d/+w+hlWgMOb7zPXu5yRdsg==",
+  "dgSpecHash": "1cDIY+Oi2ncdh221xh90NNpM7F2bvHQT2W8232PaxHjqxhtarKK4L47yHCuf+XxfkO3vs+qWpsMYTjHLgBLWAQ==",
   "success": true,
-  "projectFilePath": "/Users/isabellegustafsson/Documents/School/book-store/book-store.csproj",
+  "projectFilePath": "C:\\Users\\danie\\skola frontend\\Backend 2\\Grupparbete\\bookstore-api\\book-store.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

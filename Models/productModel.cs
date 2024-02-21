@@ -23,18 +23,4 @@ namespace ProductModel
             Price = price;
         }
     }
-
-    public enum Categories
-    {
-        Romance,
-        Fantasy,
-        Mystery,
-        Horror,
-        Historical,
-        Thriller,
-        ScienceFiction,
-        Classics,
-        LiteraryFiction,
-        Biographies
-    }
 }

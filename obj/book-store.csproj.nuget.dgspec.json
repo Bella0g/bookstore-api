@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "/Users/isabellegustafsson/Documents/School/bookstore-api/book-store.csproj": {}
+    "C:\\Users\\danie\\skola frontend\\Backend 2\\Grupparbete\\bookstore-api\\book-store.csproj": {}
   },
   "projects": {
-    "/Users/isabellegustafsson/Documents/School/bookstore-api/book-store.csproj": {
+    "C:\\Users\\danie\\skola frontend\\Backend 2\\Grupparbete\\bookstore-api\\book-store.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/isabellegustafsson/Documents/School/bookstore-api/book-store.csproj",
+        "projectUniqueName": "C:\\Users\\danie\\skola frontend\\Backend 2\\Grupparbete\\bookstore-api\\book-store.csproj",
         "projectName": "book-store",
-        "projectPath": "/Users/isabellegustafsson/Documents/School/bookstore-api/book-store.csproj",
-        "packagesPath": "/Users/isabellegustafsson/.nuget/packages/",
-        "outputPath": "/Users/isabellegustafsson/Documents/School/bookstore-api/obj/",
+        "projectPath": "C:\\Users\\danie\\skola frontend\\Backend 2\\Grupparbete\\bookstore-api\\book-store.csproj",
+        "packagesPath": "C:\\Users\\danie\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\danie\\skola frontend\\Backend 2\\Grupparbete\\bookstore-api\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/isabellegustafsson/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\danie\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -32,13 +34,28 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
               "version": "[8.0.2, )"
             }
@@ -62,7 +79,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

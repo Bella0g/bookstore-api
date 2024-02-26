@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using ProductModel;
 using book_store.Data;
+using book_store.Services;
 
 
 
@@ -14,7 +14,10 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
         builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql("Host=localhost;Database=DatabaseBook;Username=postgres;Password=BookApi123"));
         // Add services to the container.
-        builder.Services.AddControllersWithViews();
+        //builder.Services.AddControllersWithViews();
+
+        builder.Services.AddScoped<ProductService, ProductService>();
+        builder.Services.AddControllers();
 
         var app = builder.Build();
 

@@ -9,7 +9,6 @@ namespace ProductModel
         public string Image { get; set; }
         public string Title { get; set; }
         public string Author { get; set; }
-        //public Categories Category { get; set; } // Change type to Categories enum
         public string Category { get; set; }
         public string Description { get; set; }
         public double Price { get; set; }

@@ -14,14 +14,14 @@ public class ProductService
     {
         _context = context;
     }
-    public Product CreateProduct(int productId,  string title, string author, string description, double price)
+    public Product CreateProduct(int productId, string image, string title, string author, string category, string description, double price)
     {
-
-        Product product = new Product(productId,  title, author, description, price);
+        Product product = new Product(productId, image, title, author, category, description, price);
         _context.Product.Add(product);
         _context.SaveChanges();
         return product;
     }
+
     public Product DeleteProduct(int productId)
     {
         Product product = _context.Product.Find(productId);

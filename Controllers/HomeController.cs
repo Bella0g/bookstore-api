@@ -11,14 +11,13 @@ namespace book_store.Controllers;
 
 [ApiController]
 [Route("api")]
-
 public class ProductController : Controller
 {
-    private ProductService productService;
+    private ProductService _productService;
 
     public ProductController(ProductService productService)
     {
-        this.productService = productService;
+        _productService = productService;
 
     }
 
@@ -29,11 +28,9 @@ public class ProductController : Controller
         {
             return BadRequest(ModelState);
         }
-
         try
         {
-            // Update the method call to exclude Image parameter
-            Product product = productService.CreateProduct(dto.ProductId, dto.Title, dto.Author, dto.Description, dto.Price);
+            Product product = _productService.CreateProduct(dto.ProductId, dto.Image, dto.Title, dto.Author, dto.Category, dto.Description, dto.Price);
             return Ok(product);
         }
         catch (ArgumentException)
@@ -46,7 +43,7 @@ public class ProductController : Controller
     [HttpDelete("product/{productId}")]
     public IActionResult DeleteProduct(int productId)
     {
-        Product deletedProduct = productService.DeleteProduct(productId);
+        Product deletedProduct = _productService.DeleteProduct(productId);
         if (deletedProduct == null)
         {
             return NotFound();
@@ -59,7 +56,7 @@ public class ProductController : Controller
     [HttpGet("products")]
     public List<Product> GetProducts()
     {
-        return productService.GetAllProducts();
+        return _productService.GetAllProducts();
     }
 }
 
@@ -89,5 +86,5 @@ public class ProductController : Controller
 //    //{
 //    //    return view(new errorviewmodel { requestid = activity.current?.id ?? httpcontext.traceidentifier });
 //    //}
-//    /
+    
 //}

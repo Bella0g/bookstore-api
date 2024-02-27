@@ -39,7 +39,6 @@ public class ProductController : Controller
         }
     }
 
-
     [HttpDelete("product/{Id}")]
     public IActionResult DeleteProduct(int Id)
     {
@@ -52,15 +51,37 @@ public class ProductController : Controller
         return NoContent();
     }
 
+    [HttpPut("product/{Id}")]
+    public IActionResult UpdateProduct(int Id, [FromBody] Product updatedProduct)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
 
-    [HttpGet("products")]
+        try
+        {
+            Product product = _productService.UpdateProduct(Id, updatedProduct);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(product);
+        }
+        catch (Exception)
+        {
+            return BadRequest();
+        }
+    }
+
+[HttpGet("products")]
     public List<Product> GetProducts()
     {
         return _productService.GetAllProducts();
     }
 }
-
-
 
 //public class homecontroller : controller
 //{
@@ -86,5 +107,5 @@ public class ProductController : Controller
 //    //{
 //    //    return view(new errorviewmodel { requestid = activity.current?.id ?? httpcontext.traceidentifier });
 //    //}
-    
+
 //}

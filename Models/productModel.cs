@@ -13,7 +13,6 @@ namespace ProductModel
         public string Category { get; set; }
         public string Description { get; set; }
         public double Price { get; set; }
-
         public Product(int id, string image, string title, string author, string category, string description, double price)
         {
             Id = id;

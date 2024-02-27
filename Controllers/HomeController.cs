@@ -30,7 +30,7 @@ public class ProductController : Controller
         }
         try
         {
-            Product product = _productService.CreateProduct(dto.ProductId, dto.Image, dto.Title, dto.Author, dto.Category, dto.Description, dto.Price);
+            Product product = _productService.CreateProduct(dto.Id, dto.Image, dto.Title, dto.Author, dto.Category, dto.Description, dto.Price);
             return Ok(product);
         }
         catch (ArgumentException)
@@ -40,10 +40,10 @@ public class ProductController : Controller
     }
 
 
-    [HttpDelete("product/{productId}")]
-    public IActionResult DeleteProduct(int productId)
+    [HttpDelete("product/{Id}")]
+    public IActionResult DeleteProduct(int Id)
     {
-        Product deletedProduct = _productService.DeleteProduct(productId);
+        Product deletedProduct = _productService.DeleteProduct(Id);
         if (deletedProduct == null)
         {
             return NotFound();

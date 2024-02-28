@@ -3,17 +3,15 @@ using ProductModel;
 
 namespace book_store.Services;
 
-public class HomeService
-{
-}
-
 public class ProductService
 {
     private ApplicationDbContext _context;
+
     public ProductService(ApplicationDbContext context)
     {
         _context = context;
     }
+
     public Product CreateProduct(int Id, string image, string title, string author, string category, string description, double price)
     {
         Product product = new Product(Id, image, title, author, category, description, price);
@@ -54,8 +52,6 @@ public class ProductService
         _context.SaveChanges();
         return product;
     }
-
-
 
     public List<Product> GetAllProducts()
     {

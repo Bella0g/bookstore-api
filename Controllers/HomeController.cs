@@ -1,111 +1,31 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using book_store.Models;
-using book_store.Services;
-using ProductModel;
-using static System.Net.Mime.MediaTypeNames;
-using System.IO.Pipelines;
 
 namespace book_store.Controllers;
 
-
-[ApiController]
-[Route("api")]
-public class ProductController : Controller
+public class HomeController : Controller
 {
-    private ProductService _productService;
+    private readonly ILogger<HomeController> _logger;
 
-    public ProductController(ProductService productService)
+    public HomeController(ILogger<HomeController> logger)
     {
-        _productService = productService;
-
+        _logger = logger;
     }
 
-    [HttpPost("product")]
-    public IActionResult CreateProduct([FromBody] Product dto)
+    public IActionResult Index()
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-        try
-        {
-            Product product = _productService.CreateProduct(dto.Id, dto.Image, dto.Title, dto.Author, dto.Category, dto.Description, dto.Price);
-            return Ok(product);
-        }
-        catch (ArgumentException)
-        {
-            return BadRequest();
-        }
+        return View();
     }
 
-    [HttpDelete("product/{Id}")]
-    public IActionResult DeleteProduct(int Id)
+    public IActionResult Privacy()
     {
-        Product deletedProduct = _productService.DeleteProduct(Id);
-        if (deletedProduct == null)
-        {
-            return NotFound();
-        }
-
-        return NoContent();
+        return View();
     }
 
-    [HttpPut("product/{Id}")]
-    public IActionResult UpdateProduct(int Id, [FromBody] Product updatedProduct)
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
-        try
-        {
-            Product product = _productService.UpdateProduct(Id, updatedProduct);
-
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(product);
-        }
-        catch (Exception)
-        {
-            return BadRequest();
-        }
-    }
-
-[HttpGet("products")]
-    public List<Product> GetProducts()
-    {
-        return _productService.GetAllProducts();
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }
-
-//public class homecontroller : controller
-//{
-//    private readonly ilogger<homecontroller> _logger;
-
-//    public homecontroller(ilogger<homecontroller> logger)
-//    {
-//        _logger = logger;
-//    }
-
-//    public iactionresult index()
-//    {
-//        return view();
-//    }
-
-//    public iactionresult privacy()
-//    {
-//        return view();
-//    }
-
-//    //[responsecache(duration = 0, location = responsecachelocation.none, nostore = true)]
-//    //public iactionresult error()
-//    //{
-//    //    return view(new errorviewmodel { requestid = activity.current?.id ?? httpcontext.traceidentifier });
-//    //}
-
-//}

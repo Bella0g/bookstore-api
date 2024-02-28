@@ -1,3 +1,4 @@
+using ProductModel;
 using UserModel;
 
 namespace CartModel;
@@ -7,7 +8,6 @@ public class Cart
     public int Id { get; set; }
     public int Quantity { get; set; }
     public double Price { get; set; }
-
     public User User { get; set; }
 
     public Cart() { }
@@ -16,6 +16,6 @@ public class Cart
         Id = id;
         Quantity = quantity;
         Price = price;
-        User = user;
+        User = user; 
     }
 }

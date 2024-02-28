@@ -1,3 +1,4 @@
+using CartModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
@@ -5,7 +6,6 @@ namespace ProductModel
 {
     public class Product
     {
-
         public int Id { get; set; } 
         public string Image { get; set; }
         public string Title { get; set; }

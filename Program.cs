@@ -15,7 +15,7 @@ public class Program
         builder.Services.AddAuthorization(options =>
     
             options.AddPolicy(
-                "add/cart",
+                "addProduct",
                 policy =>
                 {
                     policy.RequireAuthenticatedUser();
@@ -33,7 +33,7 @@ public class Program
                 .AddApiEndpoints();
 
             builder.Services.AddScoped<ProductService, ProductService>();
-            //builder.Services.AddScoped<CartService, CartService>();
+            builder.Services.AddScoped<CartService, CartService>();
 
 
             var app = builder.Build();

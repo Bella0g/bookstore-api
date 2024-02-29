@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using book_store.Data;
@@ -11,9 +12,11 @@ using book_store.Data;
 namespace book_store.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240229081551_AddedCartListToUser")]
+    partial class AddedCartListToUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,29 +33,16 @@ namespace book_store.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("integer");
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<double>("TotalPrice")
-                        .HasColumnType("double precision");
 
                     b.Property<string>("UserId")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
 
                     b.HasIndex("UserId");
 
@@ -203,6 +193,9 @@ namespace book_store.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int?>("CartId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Category")
                         .IsRequired()
                         .HasColumnType("text");
@@ -223,6 +216,8 @@ namespace book_store.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CartId");
 
                     b.ToTable("Product");
                 });
@@ -293,17 +288,9 @@ namespace book_store.Migrations
 
             modelBuilder.Entity("CartModel.Cart", b =>
                 {
-                    b.HasOne("ProductModel.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("UserModel.User", "User")
                         .WithMany("Carts")
                         .HasForeignKey("UserId");
-
-                    b.Navigation("Product");
 
                     b.Navigation("User");
                 });
@@ -357,6 +344,18 @@ namespace book_store.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ProductModel.Product", b =>
+                {
+                    b.HasOne("CartModel.Cart", null)
+                        .WithMany("Products")
+                        .HasForeignKey("CartId");
+                });
+
+            modelBuilder.Entity("CartModel.Cart", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("UserModel.User", b =>

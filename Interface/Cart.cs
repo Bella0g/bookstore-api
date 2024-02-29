@@ -1,6 +1,8 @@
-﻿namespace book_store.Interface
+﻿using ProductModel;
+
+namespace book_store.Interface
 {
-    public interface Cart
+    public interface CartInterface
     {
     }
 }

@@ -1,6 +1,9 @@
-﻿namespace book_store.Interface
+﻿using ProductModel;
+
+namespace book_store.Interface
 {
-    public interface Product
+    public interface ProductInterface
     {
+        Product GetAllProducts(int id, string name);
     }
 }

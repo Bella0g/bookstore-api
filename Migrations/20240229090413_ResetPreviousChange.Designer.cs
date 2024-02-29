@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using book_store.Data;
@@ -11,9 +12,11 @@ using book_store.Data;
 namespace book_store.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240229090413_ResetPreviousChange")]
+    partial class ResetPreviousChange
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,29 +33,16 @@ namespace book_store.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Image")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("integer");
+                    b.Property<double>("Price")
+                        .HasColumnType("double precision");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<double>("TotalPrice")
-                        .HasColumnType("double precision");
 
                     b.Property<string>("UserId")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
 
                     b.HasIndex("UserId");
 
@@ -293,17 +283,9 @@ namespace book_store.Migrations
 
             modelBuilder.Entity("CartModel.Cart", b =>
                 {
-                    b.HasOne("ProductModel.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("UserModel.User", "User")
                         .WithMany("Carts")
                         .HasForeignKey("UserId");
-
-                    b.Navigation("Product");
 
                     b.Navigation("User");
                 });

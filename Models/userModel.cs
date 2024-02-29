@@ -6,5 +6,6 @@ namespace UserModel;
 
 public class User:IdentityUser
 {
+    public List <Cart> Carts { get; set; }
     public User() { }
 }

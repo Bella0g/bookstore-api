@@ -59,7 +59,3 @@ public class ProductService
     }
 }
 
-public class UserService
-{
-
-}

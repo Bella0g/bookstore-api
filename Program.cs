@@ -12,43 +12,53 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql("Host=localhost;Database=Database;Username=postgres;Password=BookApi123"));
-        
-        // Add services to the container.
-        builder.Services.AddControllersWithViews();
-        builder.Services.AddControllers();
+        builder.Services.AddAuthorization(options =>
+    
+            options.AddPolicy(
+                "add/cart",
+                policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                }
+            ));
 
-        //Authentication
-        builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme);
-        builder.Services.AddIdentityCore<User>()
-            .AddEntityFrameworkStores<ApplicationDbContext>()
-            .AddApiEndpoints();
+            // Add services to the container.
+            builder.Services.AddControllersWithViews();
+            builder.Services.AddControllers();
 
-        builder.Services.AddScoped<ProductService, ProductService>();
-       
-        var app = builder.Build();
+            //Authentication
+            builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme);
+            builder.Services.AddIdentityCore<User>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddApiEndpoints();
 
-        // Configure the HTTP request pipeline.
-        if (!app.Environment.IsDevelopment())
-        {
-            app.UseExceptionHandler("/Home/Error");
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-            app.UseHsts();
+            builder.Services.AddScoped<ProductService, ProductService>();
+            //builder.Services.AddScoped<CartService, CartService>();
+
+
+            var app = builder.Build();
+
+            // Configure the HTTP request pipeline.
+            if (!app.Environment.IsDevelopment())
+            {
+                app.UseExceptionHandler("/Home/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+
+            app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.MapIdentityApi<User>();
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}");
+
+            app.Run();
         }
-
-        app.UseHttpsRedirection();
-        app.UseStaticFiles();
-
-        app.UseRouting();
-
-        app.UseAuthorization();
-
-        app.MapIdentityApi<User>();
-        app.MapControllerRoute(
-            name: "default",
-            pattern: "{controller=Home}/{action=Index}/{id?}");
-        app.UseAuthentication();
-        app.UseAuthorization();
-
-        app.Run();
-    }
 }

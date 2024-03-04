@@ -1,5 +1,11 @@
 ﻿using book_store.Data;
 using CartModel;
+using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
+using System.Linq;
+using book_store.Models;
+
+
 
 namespace book_store.Services
 {
@@ -11,6 +17,7 @@ namespace book_store.Services
         {
             _context = context;
         }
+
         public async Task<bool> AddProductToCart(int productId, string userId, int quantity = 1)
         {
             var product = await _context.Product.FindAsync(productId);
@@ -18,29 +25,38 @@ namespace book_store.Services
 
             if (product != null && user != null)
             {
-                // Checking if the product exists in cart for the current user.
-                var existingCartItem = _context.Cart
-                    .FirstOrDefault(c => c.ProductId == productId && c.UserId == userId);
+                var userCart = _context.Cart
+                    .Include(c => c.CartItems)
+                    .ThenInclude(ci => ci.Product)
+                    .FirstOrDefault(c => c.UserId == userId);
+
+                if (userCart == null)
+                {
+                    userCart = new Cart
+                    {
+                        User = user,
+                        CartItems = new List<CartItem>()
+                    };
+                    _context.Cart.Add(userCart);
+                }
+
+                var existingCartItem = userCart.CartItems.FirstOrDefault(ci => ci.ProductId == productId);
 
                 if (existingCartItem != null)
                 {
-                    // if product exists, the quantity increase with 1.
                     existingCartItem.Quantity += quantity;
                 }
                 else
                 {
-                    // If the product does'nt exist, adds a new product to the cart.
-                    var cartItem = new Cart
+                    var cartItem = new CartItem
                     {
-                        Product = product,
-                        User = user,
-                        Image = product.Image,
-                        Title = product.Title,
+                        ProductId = productId,
                         Quantity = quantity,
-                        TotalPrice = product.Price * quantity
+                        TotalPrice = product.Price * quantity,
+                        Image = product.Image,
+                        Title = product.Title
                     };
-
-                    _context.Cart.Add(cartItem);
+                    userCart.CartItems.Add(cartItem);
                 }
 
                 await _context.SaveChangesAsync();
@@ -50,5 +66,28 @@ namespace book_store.Services
             return false;
         }
 
+        //public async Task<bool> RemoveProductFromCart(int productid, string userid, int quantity = 1)
+        //{
+        //    var cartitem = _context.Cart
+        //        .FirstOrDefault(c => c.ProductId == productid && c.UserId == userid);
+
+        //    if (cartitem != null)
+        //    {
+        //        if (cartitem.Quantity > quantity)
+        //        {
+        //            cartitem.Quantity -= quantity;
+        //            cartitem.TotalPrice -= quantity * cartitem.Product?.Price ?? 0;
+        //        }
+        //        else
+        //        {
+        //            _context.Cart.Remove(cartitem);
+
+        //        }
+        //        await _context.SaveChangesAsync();
+        //        return true;
+        //    }
+        //    return false;
+        //}
     }
 }
+

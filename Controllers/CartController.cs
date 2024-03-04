@@ -29,10 +29,31 @@ namespace book_store.Controllers
 
             return BadRequest("Unable to add product to cart.");
         }
+
+        //[HttpDelete("removeProduct")]
+        //[Authorize("removeProduct")]
+        //public async Task<IActionResult> RemoveProductFromCart([FromBody] RemoveProductToCartRequest request)
+        //{
+        //    var success = await _cartService.RemoveProductFromCart(request.ProductId, request.UserId, request.Quantity);
+
+        //    if (success)
+        //    {
+        //        return Ok("Product removed from cart successfully.");
+        //    }
+
+        //    return BadRequest("Unable to remove product from cart.");
+        //}
     }
 }
 public class AddProductToCartRequest
 {
     public int ProductId { get; set; }
     public string UserId { get; set; }
+}
+
+public class RemoveProductToCartRequest
+{
+    public int ProductId { get; set; }
+    public string UserId { get; set; }
+    public int Quantity { get; set; }
 }

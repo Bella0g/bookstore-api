@@ -13,17 +13,25 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
         builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql("Host=localhost;Database=Database;Username=postgres;Password=BookApi123"));
         builder.Services.AddAuthorization(options =>
-    
+        {
             options.AddPolicy(
                 "addProduct",
                 policy =>
                 {
                     policy.RequireAuthenticatedUser();
                 }
-            ));
+            );
+            //options.AddPolicy(
+            //    "removeProduct",
+            //    policy =>
+            //    {
+            //        policy.RequireAuthenticatedUser();
+            //    }
+            //);
+        });
 
-            // Add services to the container.
-            builder.Services.AddControllersWithViews();
+        // Add services to the container.
+        builder.Services.AddControllersWithViews();
             builder.Services.AddControllers();
 
             //Authentication

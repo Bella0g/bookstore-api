@@ -21,52 +21,59 @@ public class Program
                     policy.RequireAuthenticatedUser();
                 }
             );
-            //options.AddPolicy(
-            //    "removeProduct",
-            //    policy =>
-            //    {
-            //        policy.RequireAuthenticatedUser();
-            //    }
-            //);
+            options.AddPolicy(
+                "removeProduct",
+                policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                }
+            );
+            options.AddPolicy(
+             "UserCart",
+            policy =>
+    {
+        policy.RequireAuthenticatedUser();
+    }
+);
         });
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
-            builder.Services.AddControllers();
+        builder.Services.AddControllers();
 
-            //Authentication
-            builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme);
-            builder.Services.AddIdentityCore<User>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddApiEndpoints();
+        //Authentication
+        builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme);
+        builder.Services.AddIdentityCore<User>()
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddApiEndpoints();
 
-            builder.Services.AddScoped<ProductService, ProductService>();
-            builder.Services.AddScoped<CartService, CartService>();
+        builder.Services.AddScoped<ProductService, ProductService>();
+        builder.Services.AddScoped<CartService, CartService>();
 
 
-            var app = builder.Build();
+        var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
-            {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
-
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-
-            app.UseRouting();
-
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.MapIdentityApi<User>();
-            app.MapControllerRoute(
-                name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
-
-            app.Run();
+        // Configure the HTTP request pipeline.
+        if (!app.Environment.IsDevelopment())
+        {
+            app.UseExceptionHandler("/Home/Error");
+            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+            app.UseHsts();
         }
+
+        app.UseHttpsRedirection();
+        app.UseStaticFiles();
+
+        app.UseRouting();
+
+        app.UseAuthentication();
+        app.UseAuthorization();
+
+        app.MapIdentityApi<User>();
+        app.MapControllerRoute(
+            name: "default",
+            pattern: "{controller=Home}/{action=Index}/{id?}");
+
+        app.Run();
+    }
 }

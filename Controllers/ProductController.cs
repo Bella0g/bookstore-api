@@ -3,8 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using book_store.Models;
 using book_store.Services;
 using ProductModel;
-using static System.Net.Mime.MediaTypeNames;
-using System.IO.Pipelines;
+
 
 namespace book_store.Controllers;
 

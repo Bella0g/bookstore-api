@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using book_store.Models;
+using System.Text.Json.Serialization;
 
 namespace CartModel
 {
@@ -12,6 +13,7 @@ namespace CartModel
         [Key]
         public int Id { get; set; }
         public string UserId { get; set; }
+        public double TotalPrice { get; set; }
 
         // Navigation propertys
         public User User { get; set; }

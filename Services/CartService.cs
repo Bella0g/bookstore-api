@@ -1,9 +1,10 @@
 ﻿using book_store.Data;
 using CartModel;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
-using System.Linq;
 using book_store.Models;
+using book_store.Dto;
+
+
 
 
 
@@ -35,7 +36,8 @@ namespace book_store.Services
                     userCart = new Cart
                     {
                         User = user,
-                        CartItems = new List<CartItem>()
+                        CartItems = new List<CartItem>(),
+                        TotalPrice = userCart.CartItems.Sum(ci => ci.Price * ci.Quantity)
                     };
                     _context.Cart.Add(userCart);
                 }
@@ -45,6 +47,7 @@ namespace book_store.Services
                 if (existingCartItem != null)
                 {
                     existingCartItem.Quantity += quantity;
+                    existingCartItem.Price = existingCartItem.Product.Price * existingCartItem.Quantity;
                 }
                 else
                 {
@@ -52,12 +55,13 @@ namespace book_store.Services
                     {
                         ProductId = productId,
                         Quantity = quantity,
-                        TotalPrice = product.Price * quantity,
+                        Price = product.Price * quantity,
                         Image = product.Image,
                         Title = product.Title
                     };
                     userCart.CartItems.Add(cartItem);
                 }
+                userCart.TotalPrice = userCart.CartItems.Sum(ci => ci.Price * ci.Quantity);
 
                 await _context.SaveChangesAsync();
                 return true;
@@ -66,28 +70,70 @@ namespace book_store.Services
             return false;
         }
 
-        //public async Task<bool> RemoveProductFromCart(int productid, string userid, int quantity = 1)
-        //{
-        //    var cartitem = _context.Cart
-        //        .FirstOrDefault(c => c.ProductId == productid && c.UserId == userid);
+        public async Task<bool> RemoveProductFromCart(int productId, string userId, int quantity = 1)
+        {
+            var userCart = await _context.Cart
+                .Include(c => c.CartItems)
+                .ThenInclude(ci => ci.Product)
+                .FirstOrDefaultAsync(c => c.UserId == userId);
 
-        //    if (cartitem != null)
-        //    {
-        //        if (cartitem.Quantity > quantity)
-        //        {
-        //            cartitem.Quantity -= quantity;
-        //            cartitem.TotalPrice -= quantity * cartitem.Product?.Price ?? 0;
-        //        }
-        //        else
-        //        {
-        //            _context.Cart.Remove(cartitem);
+            if (userCart != null)
+            {
+                var existingCartItem = userCart.CartItems.FirstOrDefault(ci => ci.ProductId == productId);
 
-        //        }
-        //        await _context.SaveChangesAsync();
-        //        return true;
-        //    }
-        //    return false;
-        //}
+                if (existingCartItem != null)
+                {
+                    if (existingCartItem.Quantity > quantity)
+                    {
+                        existingCartItem.Quantity -= quantity;
+                        existingCartItem.Price -= quantity * existingCartItem.Product?.Price ?? 0;
+                        userCart.TotalPrice -= quantity * existingCartItem.Product?.Price ?? 0; 
+                    }
+                    else
+                    {
+                        userCart.TotalPrice -= existingCartItem.Price; 
+                        userCart.CartItems.Remove(existingCartItem);
+                    }
+
+                    await _context.SaveChangesAsync();
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public List<CartDto> GetCart(string userId)
+        {
+            var userCart = _context.Cart
+                .Include(c => c.CartItems)
+                .ThenInclude(ci => ci.Product)
+                .FirstOrDefault(c => c.UserId == userId);
+
+            if (userCart != null)
+            {
+                var cartDto = new CartDto
+                {
+                    Id = userCart.Id,
+                    UserId = userCart.UserId,
+                    CartItems = userCart.CartItems.Select(cartItem => new CartItemDto
+                    {
+                        Title = cartItem.Product.Title,
+                        Image = cartItem.Product.Image,
+                        Price = cartItem.Price,
+                        Quantity = cartItem.Quantity,
+                        ProductId = cartItem.ProductId
+                    }).ToList(),
+                    TotalPrice = userCart.TotalPrice  
+                };
+
+                return new List<CartDto> { cartDto };
+            }
+            return new List<CartDto>();
+        }
+
     }
 }
+
+
 

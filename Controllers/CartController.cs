@@ -1,7 +1,8 @@
-﻿using book_store.Services;
+﻿using book_store.Dto;
+using book_store.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace book_store.Controllers
 {
@@ -18,7 +19,7 @@ namespace book_store.Controllers
 
         [HttpPost("addProduct")]
         [Authorize("addProduct")]
-        public async Task<IActionResult> AddProductToCart([FromBody] AddProductToCartRequest request)
+        public async Task<IActionResult> AddProductToCart([FromBody] AddProductToCartRequestDto request)
         {
             var success = await _cartService.AddProductToCart(request.ProductId, request.UserId);
 
@@ -30,30 +31,30 @@ namespace book_store.Controllers
             return BadRequest("Unable to add product to cart.");
         }
 
-        //[HttpDelete("removeProduct")]
-        //[Authorize("removeProduct")]
-        //public async Task<IActionResult> RemoveProductFromCart([FromBody] RemoveProductToCartRequest request)
-        //{
-        //    var success = await _cartService.RemoveProductFromCart(request.ProductId, request.UserId, request.Quantity);
+        [HttpDelete("removeProduct")]
+        [Authorize("removeProduct")]
+        public async Task<IActionResult> RemoveProductFromCart([FromBody] RemoveProductFromCartRequestDto request)
+        {
+            var success = await _cartService.RemoveProductFromCart(request.ProductId, request.UserId, request.Quantity);
 
-        //    if (success)
-        //    {
-        //        return Ok("Product removed from cart successfully.");
-        //    }
+            if (success)
+            {
+                return Ok($"Removed {request.Quantity} products with ID {request.ProductId} from the cart successfully.");
+            }
 
-        //    return BadRequest("Unable to remove product from cart.");
-        //}
+            return BadRequest("Unable to remove product from cart.");
+        }
+
+        [HttpGet("UserCart")]
+        [Authorize("UserCart")]
+        public IActionResult GetUserCart()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userCart = _cartService.GetCart(userId);
+
+            return Ok(userCart);
+        }
+
     }
 }
-public class AddProductToCartRequest
-{
-    public int ProductId { get; set; }
-    public string UserId { get; set; }
-}
 
-public class RemoveProductToCartRequest
-{
-    public int ProductId { get; set; }
-    public string UserId { get; set; }
-    public int Quantity { get; set; }
-}

@@ -10,7 +10,7 @@ namespace book_store.Controllers
     [Route("carts")]
     public class CartController : ControllerBase
     {
-        private CartService _cartService ;
+        private CartService _cartService;
 
         public CartController(CartService cartService)
         {
@@ -39,7 +39,7 @@ namespace book_store.Controllers
 
             if (success)
             {
-                return Ok($"Removed {request.Quantity} products with ID {request.ProductId} from the cart successfully.");
+                return Ok($"Removed {request.Quantity} product id: {request.ProductId} from the cart successfully.");
             }
 
             return BadRequest("Unable to remove product from cart.");
@@ -54,7 +54,6 @@ namespace book_store.Controllers
 
             return Ok(userCart);
         }
-
     }
 }
 

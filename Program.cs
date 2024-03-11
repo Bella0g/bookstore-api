@@ -3,6 +3,7 @@ using book_store.Data;
 using book_store.Services;
 using Microsoft.AspNetCore.Identity;
 using UserModel;
+using book_store.Repository;
 
 namespace book_store;
 
@@ -12,6 +13,10 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql("Host=localhost;Database=Database;Username=postgres;Password=BookApi123"));
+        
+        builder.Services.AddIdentityCore<User>()
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddApiEndpoints();
         builder.Services.AddAuthorization(options =>
         {
             options.AddPolicy(
@@ -43,11 +48,10 @@ public class Program
 
         //Authentication
         builder.Services.AddAuthentication().AddBearerToken(IdentityConstants.BearerScheme);
-        builder.Services.AddIdentityCore<User>()
-            .AddEntityFrameworkStores<ApplicationDbContext>()
-            .AddApiEndpoints();
 
+        builder.Services.AddScoped<ProductRepository, ProductRepository>(); 
         builder.Services.AddScoped<ProductService, ProductService>();
+        builder.Services.AddScoped<CartRepository, CartRepository>();
         builder.Services.AddScoped<CartService, CartService>();
 
 

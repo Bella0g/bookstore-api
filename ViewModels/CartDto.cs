@@ -1,5 +1,4 @@
-﻿
-namespace book_store.Dto
+﻿namespace book_store.Dto
 {
     public class CartDto
     {

@@ -1,61 +1,35 @@
-﻿using book_store.Data;
+﻿using book_store.Repository;
+using book_store.ViewModels;
 using ProductModel;
 
 namespace book_store.Services;
 
 public class ProductService
 {
-    private ApplicationDbContext _context;
+    private ProductRepository _productRepository;
 
-    public ProductService(ApplicationDbContext context)
+    public ProductService(ProductRepository productRepository)
     {
-        _context = context;
+        _productRepository = productRepository;
     }
 
-    public Product CreateProduct(int Id, string image, string title, string author, string category, string description, double price)
+    public Product CreateProduct(ProductDto dto)
     {
-        Product product = new Product(Id, image, title, author, category, description, price);
-        _context.Product.Add(product);
-        _context.SaveChanges();
-        return product;
+        return _productRepository.CreateProduct(dto);
     }
 
     public Product DeleteProduct(int Id)
     {
-        Product product = _context.Product.Find(Id);
-        if (product == null)
-        {
-            return null;
-        }
-
-        _context.Product.Remove(product);
-        _context.SaveChanges();
-        return product;
+        return _productRepository.DeleteProduct(Id);
     }
 
-    public Product UpdateProduct(int Id, Product updatedProduct)
+    public Product UpdateProduct(ProductDto dto)
     {
-        Product product = _context.Product.Find(Id);
-
-        if (product == null)
-        {
-            return null;
-        }
-
-        product.Image = updatedProduct.Image;
-        product.Title = updatedProduct.Title;
-        product.Author = updatedProduct.Author;
-        product.Category = updatedProduct.Category;
-        product.Description = updatedProduct.Description;
-        product.Price = updatedProduct.Price;
-
-        _context.SaveChanges();
-        return product;
+        return _productRepository.UpdateProduct(dto);
     }
 
     public List<Product> GetAllProducts()
     {
-        return _context.Product.ToList();
+     return _productRepository.GetAllProducts();
     }
 }
-

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using book_store.Models;
 using book_store.Services;
 using ProductModel;
+using book_store.ViewModels;
 
 
 namespace book_store.Controllers;
@@ -21,7 +22,7 @@ public class ProductController : Controller
     }
 
     [HttpPost("product")]
-    public IActionResult CreateProduct([FromBody] Product dto)
+    public IActionResult CreateProduct([FromBody] ProductDto dto)
     {
         if (!ModelState.IsValid)
         {
@@ -29,7 +30,7 @@ public class ProductController : Controller
         }
         try
         {
-            Product product = _productService.CreateProduct(dto.Id, dto.Image, dto.Title, dto.Author, dto.Category, dto.Description, dto.Price);
+            Product product = _productService.CreateProduct(dto);
             return Ok(product);
         }
         catch (ArgumentException)
@@ -47,11 +48,11 @@ public class ProductController : Controller
             return NotFound();
         }
 
-        return NoContent();
+        return Ok( $"Product id: {Id} was deleted successfully.");
     }
 
     [HttpPut("product/{Id}")]
-    public IActionResult UpdateProduct(int Id, [FromBody] Product updatedProduct)
+    public IActionResult UpdateProduct(int Id, [FromBody] ProductDto dto)
     {
         if (!ModelState.IsValid)
         {
@@ -60,7 +61,8 @@ public class ProductController : Controller
 
         try
         {
-            Product product = _productService.UpdateProduct(Id, updatedProduct);
+            dto.Id = Id;
+            Product product = _productService.UpdateProduct(dto);
 
             if (product == null)
             {

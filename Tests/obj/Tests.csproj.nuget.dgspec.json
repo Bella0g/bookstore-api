@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\isaks\\Desktop\\Gruppuppgift - kopia (2)\\Gruppuppgift - kopia (2)\\Tests\\Tests.csproj": {}
+    "C:\\Users\\isaks\\source\\repos\\bookstore-api\\Tests\\Tests.csproj": {}
   },
   "projects": {
-    "C:\\Users\\isaks\\Desktop\\Gruppuppgift - kopia (2)\\Gruppuppgift - kopia (2)\\bookstore-api\\book-store.csproj": {
+    "C:\\Users\\isaks\\source\\repos\\bookstore-api\\BookApi\\book-store.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\isaks\\Desktop\\Gruppuppgift - kopia (2)\\Gruppuppgift - kopia (2)\\bookstore-api\\book-store.csproj",
+        "projectUniqueName": "C:\\Users\\isaks\\source\\repos\\bookstore-api\\BookApi\\book-store.csproj",
         "projectName": "book-store",
-        "projectPath": "C:\\Users\\isaks\\Desktop\\Gruppuppgift - kopia (2)\\Gruppuppgift - kopia (2)\\bookstore-api\\book-store.csproj",
+        "projectPath": "C:\\Users\\isaks\\source\\repos\\bookstore-api\\BookApi\\book-store.csproj",
         "packagesPath": "C:\\Users\\isaks\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\isaks\\Desktop\\Gruppuppgift - kopia (2)\\Gruppuppgift - kopia (2)\\bookstore-api\\obj\\",
+        "outputPath": "C:\\Users\\isaks\\source\\repos\\bookstore-api\\BookApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -99,14 +99,14 @@
         }
       }
     },
-    "C:\\Users\\isaks\\Desktop\\Gruppuppgift - kopia (2)\\Gruppuppgift - kopia (2)\\Tests\\Tests.csproj": {
+    "C:\\Users\\isaks\\source\\repos\\bookstore-api\\Tests\\Tests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\isaks\\Desktop\\Gruppuppgift - kopia (2)\\Gruppuppgift - kopia (2)\\Tests\\Tests.csproj",
+        "projectUniqueName": "C:\\Users\\isaks\\source\\repos\\bookstore-api\\Tests\\Tests.csproj",
         "projectName": "Tests",
-        "projectPath": "C:\\Users\\isaks\\Desktop\\Gruppuppgift - kopia (2)\\Gruppuppgift - kopia (2)\\Tests\\Tests.csproj",
+        "projectPath": "C:\\Users\\isaks\\source\\repos\\bookstore-api\\Tests\\Tests.csproj",
         "packagesPath": "C:\\Users\\isaks\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\isaks\\Desktop\\Gruppuppgift - kopia (2)\\Gruppuppgift - kopia (2)\\Tests\\obj\\",
+        "outputPath": "C:\\Users\\isaks\\source\\repos\\bookstore-api\\Tests\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -127,8 +127,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\isaks\\Desktop\\Gruppuppgift - kopia (2)\\Gruppuppgift - kopia (2)\\bookstore-api\\book-store.csproj": {
-                "projectPath": "C:\\Users\\isaks\\Desktop\\Gruppuppgift - kopia (2)\\Gruppuppgift - kopia (2)\\bookstore-api\\book-store.csproj"
+              "C:\\Users\\isaks\\source\\repos\\bookstore-api\\BookApi\\book-store.csproj": {
+                "projectPath": "C:\\Users\\isaks\\source\\repos\\bookstore-api\\BookApi\\book-store.csproj"
               }
             }
           }

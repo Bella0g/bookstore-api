@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Zeh4MHdbmpCaEz6txQXEQCm5jvYLf12VLhCbOi/7hkJDzcjtcOwNaDU2mzm3NCCnaLWRv8tzRRjyVnTjmqAINA==",
+  "dgSpecHash": "aoekLQh0mDOFvY53CygvqYyNXaGnrwepLPudXGIB9LwwmaKQnBHyygdyaPOK3VelAtqTUujm/kXdMioEQWXxGw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\isaks\\Desktop\\Gruppuppgift - kopia (2)\\Gruppuppgift - kopia (2)\\Tests\\Tests.csproj",
+  "projectFilePath": "C:\\Users\\isaks\\source\\repos\\bookstore-api\\Tests\\Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\isaks\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\isaks\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",

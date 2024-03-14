@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\bookstore-api\book-store.csproj" />
+    <ProjectReference Include="..\BookApi\book-store.csproj" />
   </ItemGroup>
 
   <ItemGroup>

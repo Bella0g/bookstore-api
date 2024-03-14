@@ -23,5 +23,6 @@ namespace ProductModel
             Description = description;
             Price = price;
         }
+        public Product() { }    
     }
 }

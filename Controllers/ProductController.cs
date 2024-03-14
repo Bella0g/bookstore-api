@@ -11,7 +11,7 @@ namespace book_store.Controllers;
 
 [ApiController]
 [Route("api")]
-public class ProductController : Controller
+public class ProductController : ControllerBase
 {
     private ProductService _productService;
 

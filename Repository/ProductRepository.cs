@@ -57,6 +57,4 @@ namespace book_store.Repository
             return _context.Product.ToList();
         }
     }
-
-
 }

@@ -14,5 +14,8 @@ namespace book_store.Data
         public DbSet<CartItem> CartItems { get; set; }  
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
             : base(options) { }
+
+        public ApplicationDbContext() { }
     }
+
 }

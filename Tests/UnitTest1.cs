@@ -8,12 +8,22 @@ using System.Diagnostics;
 using Moq;
 using ProductModel;
 using Microsoft.Identity.Client;
+using Microsoft.AspNetCore.Builder;
+using Xunit.Abstractions;
 
 
 namespace book_store.Tests
 {
-    public class ProductRepositoryTests
+
+        public class ProductRepositoryTests
     {
+        private readonly ITestOutputHelper output;
+
+        public ProductRepositoryTests(ITestOutputHelper output)
+        {
+            this.output = output;
+        }
+
         [Fact]
         public void TestCreateProduct()
         {
@@ -39,7 +49,8 @@ namespace book_store.Tests
 
                 // Act
                 var createdProduct = productRepository.CreateProduct(productDto);
-
+                output.WriteLine("Product created: " + "\n" + createdProduct.Image + "\n" + createdProduct.Title + "\n"  + createdProduct.Author + "\n" + createdProduct.Description + "\n" + createdProduct.Price + "\n" + createdProduct.Category + "\n" + createdProduct.Id);
+               
                 // Assert
                 Assert.NotNull(createdProduct);
                 Assert.Equal(productDto.Id, createdProduct.Id);
@@ -76,6 +87,7 @@ namespace book_store.Tests
                 };
 
                 var deletedProduct = productRepository.DeleteProduct(product.Id);
+                output.WriteLine("Product deleted: " + "\n" + deletedProduct.Image + "\n" + deletedProduct.Title + "\n" + deletedProduct.Author + "\n" + deletedProduct.Category + "\n" + deletedProduct.Description + "\n" + deletedProduct.Price + "\n" + deletedProduct.Id);
 
                 Assert.NotNull(deletedProduct);
                 Assert.Equal(product.Id, deletedProduct.Id);

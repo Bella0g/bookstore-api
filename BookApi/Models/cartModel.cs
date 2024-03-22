@@ -15,7 +15,6 @@ namespace CartModel
         public string UserId { get; set; }
         public double TotalPrice { get; set; }
 
-        // Navigation propertys
         public User User { get; set; }
         public List<CartItem> CartItems { get; set; } = new List<CartItem>();
     }

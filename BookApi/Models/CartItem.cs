@@ -20,7 +20,6 @@ namespace book_store.Models
         [ForeignKey("Product")]
         public int ProductId { get; set; }
 
-        // Navigation properties
         public Cart Cart { get; set; }
         public Product Product { get; set; }
     }
